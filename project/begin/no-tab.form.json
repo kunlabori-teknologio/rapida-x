@@ -1,0 +1,14 @@
+{
+  "title": "Componentes sem abas",
+  "elements": [
+    {
+      "elementType": "input",
+      "dataType": "text",
+      "label": "Exemplo de input",
+      "name": "inputExample",
+      "tooltip": "Exemplo de dica sobre o input.",
+      "placeholder": "Espaço reservado.",
+      "isRequired": true
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "title": "Componentes em abas",
+  "elements": [
+    {
+      "elementType": "tab",
+      "tabs": [
+        {
+          "id": "mainData",
+          "title": "Dados principais de componentes em abas",
+          "elements": [
+            {
+              "elementType": "input",
+              "dataType": "text",
+              "label": "Exemplo de input",
+              "name": "inputExample",
+              "tooltip": "Exemplo de dica sobre o input.",
+              "placeholder": "Espaço reservado.",
+              "isRequired": true
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

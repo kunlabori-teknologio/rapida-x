@@ -1,0 +1,10 @@
+{
+  "modules": [
+    {
+      "id": "person",
+      "title": "Clientes pessoas",
+      "icon": "person",
+      "components": ["personForm"]
+    }
+  ]
+}

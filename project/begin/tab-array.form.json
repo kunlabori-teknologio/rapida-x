@@ -1,0 +1,117 @@
+{
+  "title": "Componentes sem abas",
+  "elements": [
+    {
+      "elementType": "tab",
+      "tabs": [
+        {
+          "id": "mainTab",
+          "title": "Dados principais de componentes em abas",
+          "elements": [
+            {
+              "elementType": "input",
+              "dataType": "text",
+              "label": "Exemplo de input dentro de uma tab.",
+              "name": "inputExample",
+              "tooltip": "Exemplo de dica sobre o input.",
+              "placeholder": "Espaço reservado.",
+              "isRequired": true
+            },
+            {
+              "elementType": "array",
+              "name": "abc",
+              "elements": [
+                {
+                  "elementType": "input",
+                  "dataType": "text",
+                  "label": "Exemplo de input dentro de uma array",
+                  "name": "inputExampleInArray",
+                  "tooltip": "Exemplo de dica sobre o input dentro de array.",
+                  "placeholder": "Espaço reservado.",
+                  "isRequired": true
+                },
+                {
+                  "elementType": "array",
+                  "name": "arraysArrays",
+                  "elements": [
+                    {
+                      "elementType": "input",
+                      "dataType": "text",
+                      "label": "Exemplo de input dentro de uma array de array",
+                      "name": "inputExampleInArrayArray",
+                      "tooltip": "Exemplo de dica sobre o input dentro de array de array.",
+                      "placeholder": "Espaço reservado.",
+                      "isRequired": true
+                    }, 
+                    {
+                      "elementType": "array",
+                      "name": "arraysArraysArrays",
+                      "elements": [
+                        {
+                          "elementType": "autocomplete",
+                          "dataType": "text",
+                          "label": "Exemplo de autocomplete dentro de uma array de array de array",
+                          "name": "autocompleteExampleInArrayArrayArray",
+                          "optionsApi": {
+                            "externalEndpoint": "https://loko-backoffice-api-tftftsuywa-uc.a.run.app/countries",
+                            "labelField": "name",
+                            "valueField": "_id",
+                            "paramsToFilter": ["name", "native"],
+                            "paramType": "query",
+                            "rawQuery": "limit=5&"
+                          }
+                        },
+                        {
+                          "elementType": "input",
+                          "dataType": "text",
+                          "label": "Exemplo de input dentro de uma array de array de array",
+                          "name": "inputExampleInArrayArrayArray",
+                          "tooltip": "Exemplo de dica sobre o input dentro de array de array de array.",
+                          "placeholder": "Espaço reservado.",
+                          "isRequired": true
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "elementType": "input",
+                  "dataType": "text",
+                  "label": "Exemplo de input",
+                  "name": "inputExample",
+                  "tooltip": "Exemplo de dica sobre o input.",
+                  "placeholder": "Espaço reservado.",
+                  "isRequired": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "secondaryTab",
+          "title": "Dados secundários de componentes em abas",
+          "elements": [
+            {
+              "elementType": "select",
+              "dataType": "text",
+              "label": "Exemplo de select",
+              "name": "selectExample",
+              "tooltip": "Exemplo de dica sobre o select.",
+              "optionsObject": [
+                {
+                  "label": "Opção 1",
+                  "value": "option1"
+                },
+                {
+                  "label": "Opção 2",
+                  "value": "option2"
+                }
+              ],
+              "isRequired": true
+            }            
+          ]
+        }
+      ]
+    }
+  ]
+}

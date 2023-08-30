@@ -1,0 +1,16 @@
+{
+  "modules": [
+    {
+      "id": "animation",
+      "title": "Animação",
+      "icon": "theaters",
+      "components": ["animationForm"]
+    },
+    {
+      "id": "character",
+      "title": "Personagem",
+      "icon": "theater_comedy",
+      "components": ["characterForm"]
+    }
+  ]
+}

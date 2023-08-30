@@ -1,0 +1,532 @@
+{
+  "title": "Componentes sem abas",
+  "elements": [
+    {
+      "elementType": "select",
+      "label": "Tipo de componente",
+      "name": "componentType",
+      "type": "text",
+      "optionsObject": [
+        {
+          "label": "Formulário",
+          "value": "form"
+        },
+        {
+          "label": "Tabela",
+          "value": "table"
+        },
+        {
+          "label": "Gráfico",
+          "value": "chart"
+        }
+      ],
+      "isTriggerToCondition": true,
+      "isRequired": true
+    },
+    {
+      "elementType": "input",
+      "label": "Título",
+      "name": "title",
+      "type": "text",
+      "placeholder": "Ex.: Animação",
+      "tooltip": "Título que aparece no card que reúne os elementos do componente",
+      "isRequired": true
+    },
+    {
+      "elementType": "input",
+      "label": "Identificador",
+      "name": "id",
+      "type": "text",
+      "placeholder": "Ex.: animation",
+      "tooltip": "Identificador quer servirá como base pra montar pastas e nomear variáveis referentes ao componente",
+      "isRequired": true
+    },
+    {
+      "elementType": "select",
+      "dataType": "text",
+      "label": "Array pai",
+      "name": "parentArray",
+      "tooltip": "Diga se o elemento está inserido em uma array.",
+      "optionsByArrayValue": {
+        "originName": "arrayId"
+      },
+      "isRequired": true
+    },
+    {
+      "elementType": "array",
+      "title": "Elemento",
+      "id": "elementArray",
+      "elements": [
+        {
+          "elementType" :"select",
+          "label": "Tipo de elemento",
+          "name": "elementType",
+          "type": "text",
+          "optionsObject": [
+            {
+              "label": "Array",
+              "value": "array"
+            },
+            {
+              "label": "Autocomplete",
+              "value": "autocomplete"
+            },
+            {
+              "label": "Button",
+              "value": "button"
+            },
+            {
+              "label": "Checkbox",
+              "value": "checkbox"
+            },
+            {
+              "label": "Editor WYSIWYG",
+              "value": "wysiwyg"
+            },
+            {
+              "label": "Input",
+              "value": "input"
+            },
+            {
+              "label": "Radio",
+              "value": "radio"
+            },
+            {
+              "label": "Select",
+              "value": "select"
+            },
+            {
+              "label": "Slide",
+              "value": "slide"
+            },
+            {
+              "label": "Tabs",
+              "value": "tabs"
+            },
+            {
+              "label": "Textarea",
+              "value": "textarea"
+            }
+          ],
+          "isTriggerToCondition": true,
+          "isRequired": true
+        },
+        {
+          "elementType": "input",
+          "label": "Label",
+          "name": "label",
+          "type": "text",
+          "placeholder": "Ex.: Nome",
+          "tooltip": "Legenda principal do elemento de formulário",
+          "conditions": {
+            "type": "form",
+            "elements": [
+              {
+                "key": "elementType",
+                "value": "tabs",
+                "comparisonOperator": "notEqual"
+              },
+              {
+                "key": "elementType",
+                "value": "array",
+                "comparisonOperator": "notEqual",
+                "logicalOperator": "and"
+              }
+            ]
+          },
+          "isRequired": true
+        },
+        {
+          "elementType": "input",
+          "label": "Name",
+          "name": "name",
+          "type": "text",
+          "placeholder": "Ex.: name",
+          "tooltip": "Identificação referência para tratamento do dado",
+          "conditions": {
+            "type": "form",
+            "elements": [
+              {
+                "key": "elementType",
+                "value": "tabs",
+                "comparisonOperator": "notEqual"
+              },
+              {
+                "key": "elementType",
+                "value": "array",
+                "comparisonOperator": "notEqual",
+                "logicalOperator": "and"
+              }
+            ]
+          },
+          "isRequired": true
+        },
+        {
+          "elementType": "select",
+          "label": "Tipo de dado",
+          "name": "type",
+          "type": "text",
+          "optionsObject": [
+            {
+              "label": "Color",
+              "value": "color"
+            },
+            {
+              "label": "Datetime",
+              "value": "datetime-local"
+            },
+            {
+              "label": "Date",
+              "value": "date"
+            },
+            {
+              "label": "Email",
+              "value": "email"
+            },
+            {
+              "label": "File",
+              "value": "file"
+            },
+            {
+              "label": "Number",
+              "value": "number"
+            },
+            {
+              "label": "Password",
+              "value": "password"
+            },
+            {
+              "label": "Text",
+              "value": "text"
+            },
+            {
+              "label": "Time",
+              "value": "time"
+            }
+          ],
+          "conditions": {
+            "type": "form",
+            "elements": [
+              {
+                "key": "elementType",
+                "value": "tabs",
+                "comparisonOperator": "notEqual"
+              },
+              {
+                "key": "elementType",
+                "value": "array",
+                "comparisonOperator": "notEqual",
+                "logicalOperator": "and"
+              }
+            ]
+          },
+          "isRequired": true
+          
+        },
+        {
+          "elementType": "input",
+          "label": "Placeholder",
+          "name": "placeholder",
+          "type": "text",
+          "placeholder": "Ex.: Ex.: The Simpsons",
+          "tooltip": "Legenda secundária do elemento de formulário",
+          "conditions": {
+            "type": "form",
+            "elements": [
+              {
+                "key": "elementType",
+                "value": "tabs",
+                "comparisonOperator": "notEqual"
+              },
+              {
+                "key": "elementType",
+                "value": "array",
+                "comparisonOperator": "notEqual",
+                "logicalOperator": "and"
+              }
+            ]
+          }
+        },
+        {
+          "elementType":  "input",
+          "label": "Tooltip",
+          "name": "tooltip",
+          "type": "text",
+          "placeholder": "Ex.: Nome da animação",
+          "tooltip": "Legenda de reforço do elemento de formulário",
+          "conditions": {
+            "type": "form",
+            "elements": [
+              {
+                "key": "elementType",
+                "value": "tabs",
+                "comparisonOperator": "notEqual"
+              },
+              {
+                "key": "elementType",
+                "value": "array",
+                "comparisonOperator": "notEqual",
+                "logicalOperator": "and"
+              }
+            ]
+          }
+        },
+        {
+          "elementType": "slide",
+          "label": "Required",
+          "name": "isRequired",
+          "conditions": {
+            "type": "form",
+            "elements": [
+              {
+                "key": "elementType",
+                "value": "tabs",
+                "comparisonOperator": "notEqual"
+              },
+              {
+                "key": "elementType",
+                "value": "array",
+                "comparisonOperator": "notEqual",
+                "logicalOperator": "and"
+              }
+            ]
+          }
+        },
+        {
+          "elementType": "slide",
+          "label": "Disabled",
+          "name": "isDisabled",
+          "conditions": {
+            "type": "form",
+            "elements": [
+              {
+                "key": "elementType",
+                "value": "tabs",
+                "comparisonOperator": "notEqual"
+              },
+              {
+                "key": "elementType",
+                "value": "array",
+                "comparisonOperator": "notEqual",
+                "logicalOperator": "and"
+              }
+            ]
+          }
+        },
+        {
+          "elementType": "select",
+          "label": "Origem da option",
+          "name": "optionOrigin",
+          "type": "text",
+          "optionsObject": [
+            {
+              "label": "API",
+              "value": "optionsApi",
+              "isSelected": true
+            },
+            {
+              "label": "Manual",
+              "value": "optionsObject"
+            }
+          ],
+          "conditions": {
+            "type": "form",
+            "elements": [
+              {
+                "key": "elementType",
+                "value": "select"
+              },
+              {
+                "key": "elementType",
+                "value": "autocomplete",
+                "logicalOperator": "FilterLogicalOperatorEnum.Or"
+              }
+            ]
+          },
+          "isTriggerToCondition": true
+        },
+        {
+          "elementType": "input",
+          "label": "Endpoint",
+          "name": "optionApiEndpoint",
+          "type": "text",
+          "placeholder": "Ex.: animations",
+          "tooltip": "Endpoint com dados para option",
+          "conditions": {
+            "type": "form",
+            "elements": [
+              {
+                "key": "optionOrigin",
+                "value": "optionsApi",
+                "logicalOperator": "and"
+              },
+              {
+                "key": "elementType",
+                "value": "select",
+                "logicalOperator": "FilterLogicalOperatorEnum.Or"
+              },
+              {
+                "key": "elementType",
+                "value": "autocomplete"
+              }
+            ]
+          }
+        },
+        {
+          "elementType": "input",
+          "label": "Label",
+          "name": "optionApiLabelField",
+          "type": "text",
+          "placeholder": "Ex.: name",
+          "tooltip": "Campo que preencherá o label da option",
+          "conditions": {
+            "type": "form",
+            "elements": [
+              {
+                "key": "optionOrigin",
+                "value": "optionsApi",
+                "logicalOperator": "and"
+              },
+              {
+                "key": "elementType",
+                "value": "select",
+                "logicalOperator": "FilterLogicalOperatorEnum.Or"
+              },
+              {
+                "key": "elementType",
+                "value": "autocomplete"
+              }
+            ]
+          }
+        },
+        {
+          "elementType": "input",
+          "label": "Value",
+          "name": "optionApiValueField",
+          "type": "text",
+          "placeholder": "Ex.: _id",
+          "tooltip": "Campo que preencherá o value da option",
+          "conditions": {
+            "type": "form",
+            "elements": [
+              {
+                "key": "optionOrigin",
+                "value": "optionsApi",
+                "logicalOperator": "and"
+              },
+              {
+                "key": "elementType",
+                "value": "select",
+                "logicalOperator":" FilterLogicalOperatorEnum.Or"
+              },
+              {
+                "key": "elementType",
+                "value": "autocomplete"
+              }
+            ]
+          }
+        },
+        {
+          "elementType": "array",
+          "title": "Opção manual",
+          "id": "manualOptionArray",
+          "inArrayId": "elementArray",
+          "elements": [
+            {
+              "elementType": "input",
+              "label": "Label",
+              "name": "optionObjectLabelField",
+              "type": "text",
+              "placeholder": "Ex.: Masculino",
+              "tooltip": "String que preencherá o label da option"
+            },
+            {
+              "elementType": "input",
+              "label": "Value",
+              "name": "optionObjectValueField",
+              "type": "text",
+              "placeholder": "Ex.: male",
+              "tooltip": "String que preencherá o value da option"
+            }
+          ],
+          "conditions": {
+            "type": "form",
+            "elements": [
+              {
+                "key": "optionOrigin",
+                "value": "optionsObject",
+                "logicalOperator": "and"
+              },
+              {
+                "key": "elementType",
+                "value": "select",
+                "logicalOperator": "FilterLogicalOperatorEnum.Or"
+              },
+              {
+                "key": "elementType",
+                "value": "autocomplete"
+              }
+            ]
+          }
+        },
+        {
+          "elementType": "array",
+          "title": "Tab",
+          "id": "tabArray",
+          "inArrayId": "elementArray",
+          "elements": [
+            {
+              "elementType":"input",
+              "label": "Tab title",
+              "name": "tabTitle",
+              "type": "text",
+              "placeholder": "Ex.: Dados principais",
+              "tooltip": "Nome mostrado na aba"
+            },
+            {
+              "elementType": "array",
+              "title": "Elemento",
+              "id": "elementArrayTab",
+              "inArrayId": "tabArray",
+              "elements": [
+
+              ]
+            }
+          ],
+          "conditions": {
+            "type": "form",
+            "elements": [
+              {
+                "key": "elementType",
+                "value": "tabs"
+              }
+            ]
+          }
+        },
+        {
+          "elementType": "array",
+          "title": "Array element",
+          "id": "arrayArray",
+          "inArrayId": "elementArray",
+          "elements": [
+
+          ],
+          "conditions": {
+            "type": "form",
+            "elements": [
+              {
+                "key": "elementType",
+                "value": "array"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "elementType": "button",
+      "label": "Criar",
+      "type": "submit"
+    }   
+  ]
+}

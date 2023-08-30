@@ -1,0 +1,16 @@
+{
+  "modules": [
+    {
+      "id": "tab",
+      "title": "Módulo com abas",
+      "icon": "module",
+      "components": ["tabForm"]
+    },
+    {
+      "id": "noTab",
+      "title": "Módulo sem abas",
+      "icon": "module",
+      "components": ["noTabForm"]
+    }
+  ]
+}

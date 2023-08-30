@@ -1,0 +1,606 @@
+{
+  "title": "Pessoas",
+  "elements": [
+    {
+      "elementType": "tab",
+      "tabs": [
+        {
+          "id": "mainTab",
+          "title": "Dados principais",
+          "elements": [
+            {
+              "elementType": "autocomplete",
+              "dataType": "text",
+              "label": "País de documentação",
+              "name": "countryId",
+              "optionsApi": {
+                "externalEndpoint": "https://loko-backoffice-api-tftftsuywa-uc.a.run.app/countries",
+                "labelField": "name",
+                "valueField": "_id",
+                "paramsToFilter": ["name", "native"],
+                "paramType": "query",
+                "rawQuery": "limit=5&"
+              },
+              "isRequired":true,
+              "isTriggerToCondition": true,
+              "businessRules":[
+                {
+                  "rule": "Nome de países em suas línguas maternas"
+                }
+              ]
+            },
+            {
+              "elementType": "input",
+              "dataType": "text",
+              "label": "Documento principal",
+              "name": "uniqueId",
+              "placeholder": "Apenas números",
+              "tooltip": "Exs.: CPF no Brasil, SSI nos EUA, NIF na União Européia",
+              "isRequired": true,
+              "apiRequest": {
+                "paramType": "query",
+                "externalEndpoint": "https://autentikigo-tftftsuywa-ue.a.run.app/get-profile?userType=person&uniqueId=",
+                "filtersFromOtherFormFields": [
+                  {
+                    "formFieldName": "nationalityId",
+                    "filterPropertyName": "country"
+                  }
+                ],
+                "formFieldsFilledByApiResponse": [
+                  {
+                    "formFieldName": "name",
+                    "propertyFromApiToFillFormField": "name"
+                  },
+                  {
+                    "formFieldName": "gender",
+                    "propertyFromApiToFillFormField": "gender"
+                  },
+                  {
+                    "formFieldName": "birthday",
+                    "propertyFromApiToFillFormField": "birthday"
+                  },
+                  {
+                    "formFieldName": "mother",
+                    "propertyFromApiToFillFormField": "mother"
+                  }
+                ]
+              },
+              "conditions": {
+                "type": "form",
+                "elements": [
+                  {
+                    "key": "nationalityId",
+                    "comparisonOperator": "notEqual",
+                    "value": null
+                  }
+                ]
+              }
+            },
+            {
+              "elementType": "input",
+              "dataType": "text",
+              "label": "Nome",
+              "name": "name",
+              "placeholder": "Nome completo",
+              "isRequired": true,
+              "conditions": {
+                "type": "form",
+                "elements": [
+                  {
+                    "key": "nationalityId",
+                    "comparisonOperator": "notEqual",
+                    "value": null
+                  }
+                ]
+              }
+            },
+            {
+              "elementType": "select",
+              "dataType": "text",
+              "label": "Gênero por direito",
+              "name": "gender",
+              "optionsObject": [
+                {
+                  "label": "Masculino",
+                  "value": "M"
+                },
+                {
+                  "label": "Feminino",
+                  "value": "F"
+                }
+              ],
+              "isRequired": true,
+              "conditions": {
+                "type": "form",
+                "elements": [
+                  {
+                    "key": "nationalityId",
+                    "comparisonOperator": "notEqual",
+                    "value": null
+                  }
+                ]
+              }
+            },
+            {
+              "elementType": "input",
+              "dataType": "date",
+              "label": "Nascimento",
+              "name": "birthday",
+              "isRequired": true,
+              "conditions": {
+                "type": "form",
+                "elements": [
+                  {
+                    "key": "nationalityId",
+                    "comparisonOperator": "notEqual",
+                    "value": null
+                  }
+                ]
+              }
+            },
+            {
+              "elementType": "input",
+              "dataType": "text",
+              "label": "Nome da mãe",
+              "name": "mother",
+              "placeholder": "Nome completo",
+              "isRequired": true,
+              "conditions": {
+                "type": "form",
+                "elements": [
+                  {
+                    "key": "nationalityId",
+                    "comparisonOperator": "notEqual",
+                    "value": null
+                  }
+                ]
+              }
+            },
+            {
+              "elementType": "autocomplete",
+              "dataType": "text",
+              "label": "Naturalidade",
+              "placeholder": "Cidade de nascimento",
+              "name": "cityOfBirthId",
+              "optionsApi": {
+                "populate": ["stateId.countryId"],
+                "externalEndpoint": "https://loko-backoffice-api-tftftsuywa-uc.a.run.app/cities",
+                "labelField": ["name", "stateId.name", "stateId.countryId.name"],
+                "valueField": "_id",
+                "paramsToFilter": ["name"],
+                "paramType": "query"
+              },
+              "conditions": {
+                "type": "form",
+                "elements": [
+                  {
+                    "key": "nationalityId",
+                    "comparisonOperator": "notEqual",
+                    "value": null
+                  }
+                ]
+              }
+            },
+            {
+              "elementType": "input",
+              "dataType": "text",
+              "label": "Nome social",
+              "name": "nickname",
+              "placeholder": "Nome reconhecido",
+              "conditions": {
+                "type": "form",
+                "elements": [
+                  {
+                    "key": "nationalityId",
+                    "comparisonOperator": "notEqual",
+                    "value": null
+                  }
+                ]
+              }
+            },
+            {
+              "elementType": "select",
+              "dataType": "text",
+              "label": "Gênero de tratamento",
+              "name": "treatmentGender",
+              "optionsObject": [
+                {
+                  "label": "Masculino (ele, dele, o)",
+                  "value": "M"
+                },
+                {
+                  "label": "Feminino (ela, dela, a)",
+                  "value": "F"
+                },
+                {
+                  "label": "Neutro (elx, delx, x)",
+                  "value": "X"
+                }
+              ],
+              "isRequired": true,
+              "conditions": {
+                "type": "form",
+                "elements": [
+                  {
+                    "key": "nationalityId",
+                    "comparisonOperator": "notEqual",
+                    "value": null
+                  }
+                ]
+              }
+            },
+            {
+              "elementType": "select",
+              "dataType": "text",
+              "label": "Estado civil",
+              "name": "maritalStatus",
+              "optionsObject": [
+                {
+                  "label": "Solteiro",
+                  "value": "single"
+                },
+                {
+                  "label": "Casado",
+                  "value": "married"
+                },
+                {
+                  "label": "Separado",
+                  "value": "separated"
+                },
+                {
+                  "label": "Divorciado",
+                  "value": "divorced"
+                },
+                {
+                  "label": "Viúvo",
+                  "value": "widowed"
+                }
+              ],
+              "isRequired": true,
+              "conditions": {
+                "type": "form",
+                "elements": [
+                  {
+                    "key": "nationalityId",
+                    "comparisonOperator": "notEqual",
+                    "value": null
+                  }
+                ]
+              }
+            },
+            {
+              "elementType": "input",
+              "dataType": "text",
+              "label": "Descrição do primeiro contato",
+              "name": "firstContactDescription",
+              "isRequired": true,
+              "isMultipleLines": true,
+              "conditions": {
+                "type": "form",
+                "elements": [
+                  {
+                    "key": "nationalityId",
+                    "comparisonOperator": "notEqual",
+                    "value": null
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": "professionalTab",
+          "title": "Dados profissionais",
+          "elements": [
+          ]
+        },
+        {
+          "id": "contactsTab",
+          "title": "Contatos",
+          "elements": [
+            {
+              "elementType": "array",
+              "id": "contacts",
+              "title": "Contato",
+              "elements": [
+                {
+                  "elementType": "select",
+                  "dataType": "text",
+                  "label": "Tipo de contato",
+                  "name": "contactType",
+                  "optionsObject": [
+                    {
+                      "label": "Celular",
+                      "value": "mobile"
+                    },
+                    {
+                      "label": "E-mail",
+                      "value": "email"
+                    },
+                    {
+                      "label": "Linkedin",
+                      "value": "linkedin"
+                    },
+                    {
+                      "label": "Instagram",
+                      "value": "instagram"
+                    },
+                    {
+                      "label": "Facebook",
+                      "value": "facebook"
+                    }
+                  ]
+                },
+                {
+                  "elementType": "input",
+                  "dataType": "text",
+                  "label": "Valor",
+                  "name": "contactValue",
+                  "placeholder": "Ex.: email@email.com | (88) 98888-8888",
+                  "tooltip": "Valor de acordo com o tipo de contato"
+                },
+                {
+                  "elementType": "input",
+                  "dataType": "text",
+                  "label": "Comentário",
+                  "name": "contactComment",
+                  "placeholder": "Ex.: E-mail comercial | Telefone do vizinho",
+                  "tooltip": "Informação adicional acerca do contato",
+                  "isMultipleLines": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "interestsTab",
+          "title": "Interesses",
+          "elements": [
+            {
+              "elementType": "input",
+              "dataType": "text",
+              "label": "Valor",
+              "name": "interestValue",
+              "placeholder": "Ex.: Sociedade Esportiva Palmeiras",
+              "tooltip": "Hobbies, lugares, coisas, de interesse do cliente",
+              "isRequired": true
+            },
+            {
+              "elementType": "input",
+              "dataType": "text",
+              "label": "Comentário",
+              "name": "interestComment",
+              "placeholder": "Ex.: Aparece sempre com a camisa do time",
+              "tooltip": "Informação adicional acerca do interesse"
+            },
+            {
+              "elementType": "input",
+              "dataType": "number",
+              "label": "Repetições no Instagram",
+              "name": "interestInstagramRepetition",
+              "placeholder": "Ex.: 10",
+              "tooltip": "Quantas vezes o interesse se repete nas postagens do Instagram"
+            },
+            {
+              "elementType": "input",
+              "dataType": "number",
+              "label": "Repetições no Facebook",
+              "name": "interestFacebookRepetition",
+              "placeholder": "Ex.: 10",
+              "tooltip": "Quantas vezes o interesse se repete nas postagens do Facebook"
+            },
+            {
+              "elementType": "input",
+              "dataType": "number",
+              "label": "Repetições no TikTok",
+              "name": "interestTikTokRepetition",
+              "placeholder": "Ex.: 10",
+              "tooltip": "Quantas vezes o interesse se repete nas postagens do TikTok"
+            }
+          ]
+        },
+        {
+          "id": "addressesTab",
+          "title": "Endereços para contato",
+          "elements": [
+            {
+              "elementType": "autocomplete",
+              "dataType": "text",
+              "label": "País do endereço",
+              "name": "addressCountryId",
+              "optionsApi": {
+                "externalEndpoint": "https://loko-backoffice-api-tftftsuywa-uc.a.run.app/countries",
+                "labelField": "name",
+                "valueField": "_id",
+                "paramsToFilter": ["name", "native"],
+                "paramType": "query"
+              },
+              "isTriggerToCondition": true
+            },
+            {
+              "elementType": "input",
+              "dataType": "text",
+              "label": "CEP",
+              "name": "zipCode",
+              "placeholder": "Ex.: 00.000-000",
+              "isRequired": true,
+              "apiRequest": {
+                "endpoint": "__external-api/address?zipcode=",
+                "paramType": "query",
+                "filtersFromOtherFormFields": [
+                  {
+                    "formFieldName": "addressCountryId",
+                    "filterPropertyName": "country"
+                  }
+                ],
+                "formFieldsFilledByApiResponse": [
+                  {
+                    "formFieldName": "address",
+                    "propertyFromApiToFillFormField": "address"
+                  },
+                  {
+                    "formFieldName": "district",
+                    "propertyFromApiToFillFormField": "neighborhood"
+                  },
+                  {
+                    "formFieldName": "city",
+                    "propertyFromApiToFillFormField": "city"
+                  },
+                  {
+                    "formFieldName": "state",
+                    "propertyFromApiToFillFormField": "state"
+                  },
+                  {
+                    "formFieldName": "country",
+                    "propertyFromApiToFillFormField": "country"
+                  }
+                ]
+              },
+              "conditions": {
+                "type": "form",
+                "elements": [
+                  {
+                    "key": "addressCountryId",
+                    "comparisonOperator": "notEqual",
+                    "value": null
+                  }
+                ]
+              }
+            },
+            {
+              "elementType": "input",
+              "dataType": "text",
+              "label": "Logradouro",
+              "name": "address",
+              "placeholder": "Nome da Rua, Avenida, Travessa etc.",
+              "isRequired": true,
+              "conditions": {
+                "type": "form",
+                "elements": [
+                  {
+                    "key": "addressCountryId",
+                    "comparisonOperator": "notEqual",
+                    "value": null
+                  }
+                ]
+              }
+            },
+            {
+              "elementType": "input",
+              "dataType": "text",
+              "label": "Número",
+              "name": "number",
+              "placeholder": "Número da localização",
+              "isRequired": true,
+              "conditions": {
+                "type": "form",
+                "elements": [
+                  {
+                    "key": "addressCountryId",
+                    "comparisonOperator": "notEqual",
+                    "value": null
+                  }
+                ]
+              }
+            },
+            {
+              "elementType": "input",
+              "dataType": "text",
+              "label": "Bairro",
+              "name": "district",
+              "placeholder": "Distrito do logradouro",
+              "isRequired": true,
+              "conditions": {
+                "type": "form",
+                "elements": [
+                  {
+                    "key": "addressCountryId",
+                    "comparisonOperator": "notEqual",
+                    "value": null
+                  }
+                ]
+              }
+            },
+            {
+              "elementType": "input",
+              "dataType": "text",
+              "label": "Complemento",
+              "name": "complement",
+              "placeholder": "Mais informações que ajudem a achar seu endereço",
+              "conditions": {
+                "type": "form",
+                "elements": [
+                  {
+                    "key": "addressCountryId",
+                    "comparisonOperator": "notEqual",
+                    "value": null
+                  }
+                ]
+              }
+            },
+            {
+              "elementType": "input",
+              "dataType": "text",
+              "label": "País",
+              "name": "country",
+              "placeholder": "País do seu endereço",
+              "isRequired": true,
+              "conditions": {
+                "type": "form",
+                "elements": [
+                  {
+                    "key": "addressCountryId",
+                    "comparisonOperator": "notEqual",
+                    "value": null
+                  }
+                ]
+              }
+            },
+            {
+              "elementType": "input",
+              "dataType": "text",
+              "label": "Estado",
+              "name": "state",
+              "placeholder": "Estado do seu endereço",
+              "isRequired": true,
+              "conditions": {
+                "type": "form",
+                "elements": [
+                  {
+                    "key": "addressCountryId",
+                    "comparisonOperator": "notEqual",
+                    "value": null
+                  }
+                ]
+              }
+            },
+            {
+              "elementType": "input",
+              "dataType": "text",
+              "label": "Cidade",
+              "name": "city",
+              "placeholder": "Município do seu endereço",
+              "isRequired": true,
+              "conditions": {
+                "type": "form",
+                "elements": [
+                  {
+                    "key": "addressCountryId",
+                    "comparisonOperator": "notEqual",
+                    "value": null
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "elementType": "button",
+      "type": "submit",
+      "target": "self",
+      "icon": "login"
+    }
+  ]
+}
