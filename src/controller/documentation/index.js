@@ -32,7 +32,7 @@ const createDocumentation = async(array) => {
 const dokumentado = async (array) => {
   const formattedArray = await formatDokumentado(array);
   const code = await makeDokumentadoCode(formattedArray);
-  console.log(code, 35);
+  
   return false;
 }
 
