@@ -600,7 +600,7 @@
       "elementType": "button",
       "type": "submit",
       "target": "self",
-      "icon": "login"
+      "icon": "check"
     }
   ]
 }

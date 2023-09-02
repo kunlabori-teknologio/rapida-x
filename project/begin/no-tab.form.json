@@ -4,8 +4,8 @@
     {
       "elementType": "input",
       "dataType": "text",
-      "label": "Exemplo de input",
       "name": "inputExample",
+      "label": "Exemplo de input",
       "tooltip": "Exemplo de dica sobre o input.",
       "placeholder": "Espaço reservado.",
       "isRequired": true
