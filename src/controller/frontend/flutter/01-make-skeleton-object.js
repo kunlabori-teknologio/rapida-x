@@ -26,7 +26,6 @@ const makeFlutterSkeleton = async (array) => {
       const sdkPath = chp.execSync(`find ~/ -type d -name 'bin' 2>/dev/null | grep 'flutter/bin'`).toString().split('flutter/bin')[0];
       const bashrcContent = chp.execSync(`cat $HOME/.bashrc`).toString();
       const str = `export PATH="$PATH:${sdkPath}flutter/bin"`;
-      const regex =  new RegExp(str);
       
       if (!bashrcContent.includes(str)) {
         chp.execSync(`\n echo '${str}' >> $HOME/.bashrc`);
