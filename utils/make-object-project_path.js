@@ -24,8 +24,12 @@ const makeProjectObject = async (project) => {
         result.push(object);
       } else if (file.split('.')[1] !== 'json') {
         const type = file.split('.')[1];
-        const id = `${setIdToPropertyName(file.split('.')[0])}${utils.string.pascalfy(file.split('.')[1])}`;
-        const object = {...JSON.parse(string), id, type};
+        const id = `${setIdToPropertyName(file.split('.')[0])}${utils.string.pascalfy(file.split('.')[1])}`;        
+        const object = {
+          ...JSON.parse(string), 
+          id, 
+          type
+        };
         
         result.push(object);
       } else {

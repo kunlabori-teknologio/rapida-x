@@ -12,7 +12,7 @@ const startRapida = async (project) => {
 
   if (project.documentations) {
     console.info(`Preparing documentation code`);
-    createDocumentation(array);
+    const code = await createDocumentation(array);
   }
 }
 

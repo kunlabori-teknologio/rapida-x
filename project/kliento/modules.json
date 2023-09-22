@@ -1,10 +1,25 @@
 {
   "modules": [
     {
+      "id": "authentication", 
+      "title": "Autenticação",
+      "whitelabel": "appleAndGoogleAuthenticationForm"
+    },
+    {
+      "id": "company",
+      "title": "Clientes empresas",
+      "icon": "company",
+      "components": ["companyForm"],
+      "guards": ["authentication"],
+      "isMenu": true
+    },
+    {
       "id": "person",
       "title": "Clientes pessoas",
       "icon": "person",
-      "components": ["personForm"]
+      "components": ["personForm"],
+      "guards": ["authentication"],
+      "isMenu": true
     }
   ]
 }

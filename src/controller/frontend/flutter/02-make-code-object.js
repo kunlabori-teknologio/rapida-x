@@ -1,9 +1,9 @@
-const { createFrameworkControllerFormCodeOverProjectUi } = require('./form/<ui>/controller');
-const { createFrameworkTemplateFormCodeOverProjectUi } = require('./form/material/template');
-const { createFrameworkControllerTableCodeOverProjectUi } = require('./table/controller');
-const { createFrameworkTemplateTableCodeOverProjectUi } = require('./table/template');
+const { createFlutterControllerFormCodeOverProjectUi } = require('./form/<ui>/controller');
+const { createFlutterTemplateFormCodeOverProjectUi } = require('./form/material/template');
+const { createFlutterControllerTableCodeOverProjectUi } = require('./table/controller');
+const { createFlutterTemplateTableCodeOverProjectUi } = require('./table/template');
 
-const makeFrameworkCode = async (arrayOfProjectObjects) => {
+const makeFlutterCode = async (arrayOfProjectObjects) => {
   const components = [];
   const modules = [];
   
@@ -36,13 +36,13 @@ const createTemplateCodeOverObject = async (array, object) => {
   let code = '';
   switch (object.type) {
     case 'form':
-      if (project.ui === 'projectUi')
-        code += await createFrameworkTemplateFormCodeOverProjectUi(project, object);
+      if (project.ui === 'material')
+        code += await createFlutterTemplateFormCodeOverProjectUi(project, object);
       break;
 
     case 'table':
-      if (project.ui === 'projectUi')
-        code += await createFrameworkTemplateTableCodeOverProjectUi(project, object);
+      if (project.ui === 'material')
+        code += await createFlutterTemplateTableCodeOverProjectUi(project, object);
       break;
     default:
       console.error(`${object.type} is not an expected type to origin object.`);
@@ -57,13 +57,13 @@ const createControllerCodeOverObject = async (array, object) => {
   let code = '';
   switch (object.type) {
     case 'form':
-      if (project.ui === 'projectUi')
-        code += await createFrameworkControllerFormCodeOverProjectUi(project, object);
+      if (project.ui === 'material')
+        code += await createFlutterControllerFormCodeOverProjectUi(project, object);
       break;
 
     case 'table':
-      if (project.ui === 'projectUi')
-        code += await createFrameworkControllerTableCodeOverProjectUi(project, object);
+      if (project.ui === 'material')
+        code += await createFlutterControllerTableCodeOverProjectUi(project, object);
       break;
     default:
       break;
@@ -73,5 +73,5 @@ const createControllerCodeOverObject = async (array, object) => {
 }
 
 module.exports = {
-  makeFrameworkCode
+  makeFlutterCode
 }

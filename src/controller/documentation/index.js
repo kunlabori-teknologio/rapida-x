@@ -1,5 +1,7 @@
 const { formatDokumentado } = require("./dokumentado/01-format-object");
 const { makeDokumentadoCode } = require("./dokumentado/02-make-code-object");
+const { makeDokumentadoFiles } = require("./dokumentado/03-make-files-array_of_objects");
+const { matchDokumentadoFilesAndCodes } = require("./dokumentado/04-match-files_and_codes");
 
 let code = '';
 
@@ -11,7 +13,7 @@ const createDocumentation = async(array) => {
     
     switch (documentation) {
       case 'dokumentado':
-        dokumentado(array);
+        return await dokumentado(array);
         break;
   
       case 'c4':
@@ -33,7 +35,8 @@ const dokumentado = async (array) => {
   const formattedArray = await formatDokumentado(array);
   const code = await makeDokumentadoCode(formattedArray);
   
-  return false;
+  makeDokumentadoFiles(code);
+  matchDokumentadoFilesAndCodes(code);
 }
 
 const c4 = async (array) => {

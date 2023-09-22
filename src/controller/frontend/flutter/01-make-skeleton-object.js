@@ -5,6 +5,7 @@ require('dotenv').config()
 const terminalPassword = process.env.TERMINAL_PASSWORD;
 const projectsPath = path.join(__dirname, '..', '..', '..', '..', 'project');
 const appsPath = path.join(__dirname, '..', '..', '..', '..', 'apps');
+
 const makeFlutterSkeleton = async (array) => {
   const project = array[0].project;
   
@@ -12,7 +13,7 @@ const makeFlutterSkeleton = async (array) => {
   try {
     chp.execSync(`[ -d "${appsPath}/${project.folder}" ]`);
     console.info(`${projectsPath}/${project.folder} already exists`);
-
+    changeFultterSkeleton(array);
     return true;
   } catch (err) {
     try {
@@ -46,6 +47,10 @@ const makeFlutterSkeleton = async (array) => {
       return error.message;
     }
   }
+}
+
+const changeFultterSkeleton = (array) => {
+  
 }
 
 module.exports = {

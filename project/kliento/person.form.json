@@ -273,7 +273,6 @@
               "dataType": "text",
               "label": "Descrição do primeiro contato",
               "name": "firstContactDescription",
-              "isRequired": true,
               "isMultipleLines": true,
               "conditions": {
                 "type": "form",
@@ -292,6 +291,50 @@
           "id": "professionalTab",
           "title": "Dados profissionais",
           "elements": [
+            {
+              "elementType": "autocomplete",
+              "dataType": "text",
+              "label": "Profissão",
+              "name": "professionId",
+              "optionsApi": {
+                "externalEndpoint": "https://cbo-backoffice-api-tftftsuywa-uc.a.run.app/professions",
+                "labelField": "name",
+                "valueField": "_id",
+                "paramsToFilter": ["name", "cboCode"],
+                "paramType": "query"
+              },
+              "isTriggerToCondition": true
+            },
+            {
+              "elementType": "array",
+              "id": "professionMoreDetails",
+              "title": "Informação",
+              "elements": [
+                {
+                  "elementType": "input",
+                  "dataType": "text",
+                  "label": "Detalhe",
+                  "name": "professionDetail",
+                  "placeholder": "Ex.: CRM | CRF | CREA"
+                },
+                {
+                  "elementType": "input",
+                  "dataType": "text",
+                  "label": "Valor do detalhe",
+                  "name": "professionDetail",
+                  "placeholder": "Ex.: 21740 | 1-012162-3 | 1413217281",
+                  "tooltip": "Valor de acordo com o tipo de detalhe."
+                },
+                {
+                  "elementType": "input",
+                  "dataType": "text",
+                  "label": "Comentário",
+                  "name": "contactComment",
+                  "placeholder": "Ex.: CRM/SP | CRF/MG | CREA/AP",
+                  "tooltip": "Informação adicional acerca do detalhe"
+                }
+              ]
+            }
           ]
         },
         {
@@ -404,193 +447,200 @@
           "title": "Endereços para contato",
           "elements": [
             {
-              "elementType": "autocomplete",
-              "dataType": "text",
-              "label": "País do endereço",
-              "name": "addressCountryId",
-              "optionsApi": {
-                "externalEndpoint": "https://loko-backoffice-api-tftftsuywa-uc.a.run.app/countries",
-                "labelField": "name",
-                "valueField": "_id",
-                "paramsToFilter": ["name", "native"],
-                "paramType": "query"
-              },
-              "isTriggerToCondition": true
-            },
-            {
-              "elementType": "input",
-              "dataType": "text",
-              "label": "CEP",
-              "name": "zipCode",
-              "placeholder": "Ex.: 00.000-000",
-              "isRequired": true,
-              "apiRequest": {
-                "endpoint": "__external-api/address?zipcode=",
-                "paramType": "query",
-                "filtersFromOtherFormFields": [
-                  {
-                    "formFieldName": "addressCountryId",
-                    "filterPropertyName": "country"
-                  }
-                ],
-                "formFieldsFilledByApiResponse": [
-                  {
-                    "formFieldName": "address",
-                    "propertyFromApiToFillFormField": "address"
+              "elementType": "array",
+              "id": "addresses",
+              "title": "Endereço",
+              "elements": [
+                {
+                  "elementType": "autocomplete",
+                  "dataType": "text",
+                  "label": "País do endereço",
+                  "name": "addressCountryId",
+                  "optionsApi": {
+                    "externalEndpoint": "https://loko-backoffice-api-tftftsuywa-uc.a.run.app/countries",
+                    "labelField": "name",
+                    "valueField": "_id",
+                    "paramsToFilter": ["name", "native"],
+                    "paramType": "query"
                   },
-                  {
-                    "formFieldName": "district",
-                    "propertyFromApiToFillFormField": "neighborhood"
+                  "isTriggerToCondition": true
+                },
+                {
+                  "elementType": "input",
+                  "dataType": "text",
+                  "label": "CEP",
+                  "name": "zipCode",
+                  "placeholder": "Ex.: 00.000-000",
+                  "isRequired": true,
+                  "apiRequest": {
+                    "endpoint": "__external-api/address?zipcode=",
+                    "paramType": "query",
+                    "filtersFromOtherFormFields": [
+                      {
+                        "formFieldName": "addressCountryId",
+                        "filterPropertyName": "country"
+                      }
+                    ],
+                    "formFieldsFilledByApiResponse": [
+                      {
+                        "formFieldName": "address",
+                        "propertyFromApiToFillFormField": "address"
+                      },
+                      {
+                        "formFieldName": "district",
+                        "propertyFromApiToFillFormField": "neighborhood"
+                      },
+                      {
+                        "formFieldName": "city",
+                        "propertyFromApiToFillFormField": "city"
+                      },
+                      {
+                        "formFieldName": "state",
+                        "propertyFromApiToFillFormField": "state"
+                      },
+                      {
+                        "formFieldName": "country",
+                        "propertyFromApiToFillFormField": "country"
+                      }
+                    ]
                   },
-                  {
-                    "formFieldName": "city",
-                    "propertyFromApiToFillFormField": "city"
-                  },
-                  {
-                    "formFieldName": "state",
-                    "propertyFromApiToFillFormField": "state"
-                  },
-                  {
-                    "formFieldName": "country",
-                    "propertyFromApiToFillFormField": "country"
+                  "conditions": {
+                    "type": "form",
+                    "elements": [
+                      {
+                        "key": "addressCountryId",
+                        "comparisonOperator": "notEqual",
+                        "value": null
+                      }
+                    ]
                   }
-                ]
-              },
-              "conditions": {
-                "type": "form",
-                "elements": [
-                  {
-                    "key": "addressCountryId",
-                    "comparisonOperator": "notEqual",
-                    "value": null
+                },
+                {
+                  "elementType": "input",
+                  "dataType": "text",
+                  "label": "Logradouro",
+                  "name": "address",
+                  "placeholder": "Nome da Rua, Avenida, Travessa etc.",
+                  "isRequired": true,
+                  "conditions": {
+                    "type": "form",
+                    "elements": [
+                      {
+                        "key": "addressCountryId",
+                        "comparisonOperator": "notEqual",
+                        "value": null
+                      }
+                    ]
                   }
-                ]
-              }
-            },
-            {
-              "elementType": "input",
-              "dataType": "text",
-              "label": "Logradouro",
-              "name": "address",
-              "placeholder": "Nome da Rua, Avenida, Travessa etc.",
-              "isRequired": true,
-              "conditions": {
-                "type": "form",
-                "elements": [
-                  {
-                    "key": "addressCountryId",
-                    "comparisonOperator": "notEqual",
-                    "value": null
+                },
+                {
+                  "elementType": "input",
+                  "dataType": "text",
+                  "label": "Número",
+                  "name": "number",
+                  "placeholder": "Número da localização",
+                  "isRequired": true,
+                  "conditions": {
+                    "type": "form",
+                    "elements": [
+                      {
+                        "key": "addressCountryId",
+                        "comparisonOperator": "notEqual",
+                        "value": null
+                      }
+                    ]
                   }
-                ]
-              }
-            },
-            {
-              "elementType": "input",
-              "dataType": "text",
-              "label": "Número",
-              "name": "number",
-              "placeholder": "Número da localização",
-              "isRequired": true,
-              "conditions": {
-                "type": "form",
-                "elements": [
-                  {
-                    "key": "addressCountryId",
-                    "comparisonOperator": "notEqual",
-                    "value": null
+                },
+                {
+                  "elementType": "input",
+                  "dataType": "text",
+                  "label": "Bairro",
+                  "name": "district",
+                  "placeholder": "Distrito do logradouro",
+                  "isRequired": true,
+                  "conditions": {
+                    "type": "form",
+                    "elements": [
+                      {
+                        "key": "addressCountryId",
+                        "comparisonOperator": "notEqual",
+                        "value": null
+                      }
+                    ]
                   }
-                ]
-              }
-            },
-            {
-              "elementType": "input",
-              "dataType": "text",
-              "label": "Bairro",
-              "name": "district",
-              "placeholder": "Distrito do logradouro",
-              "isRequired": true,
-              "conditions": {
-                "type": "form",
-                "elements": [
-                  {
-                    "key": "addressCountryId",
-                    "comparisonOperator": "notEqual",
-                    "value": null
+                },
+                {
+                  "elementType": "input",
+                  "dataType": "text",
+                  "label": "Complemento",
+                  "name": "complement",
+                  "placeholder": "Mais informações que ajudem a achar seu endereço",
+                  "conditions": {
+                    "type": "form",
+                    "elements": [
+                      {
+                        "key": "addressCountryId",
+                        "comparisonOperator": "notEqual",
+                        "value": null
+                      }
+                    ]
                   }
-                ]
-              }
-            },
-            {
-              "elementType": "input",
-              "dataType": "text",
-              "label": "Complemento",
-              "name": "complement",
-              "placeholder": "Mais informações que ajudem a achar seu endereço",
-              "conditions": {
-                "type": "form",
-                "elements": [
-                  {
-                    "key": "addressCountryId",
-                    "comparisonOperator": "notEqual",
-                    "value": null
+                },
+                {
+                  "elementType": "input",
+                  "dataType": "text",
+                  "label": "País",
+                  "name": "country",
+                  "placeholder": "País do seu endereço",
+                  "isRequired": true,
+                  "conditions": {
+                    "type": "form",
+                    "elements": [
+                      {
+                        "key": "addressCountryId",
+                        "comparisonOperator": "notEqual",
+                        "value": null
+                      }
+                    ]
                   }
-                ]
-              }
-            },
-            {
-              "elementType": "input",
-              "dataType": "text",
-              "label": "País",
-              "name": "country",
-              "placeholder": "País do seu endereço",
-              "isRequired": true,
-              "conditions": {
-                "type": "form",
-                "elements": [
-                  {
-                    "key": "addressCountryId",
-                    "comparisonOperator": "notEqual",
-                    "value": null
+                },
+                {
+                  "elementType": "input",
+                  "dataType": "text",
+                  "label": "Estado",
+                  "name": "state",
+                  "placeholder": "Estado do seu endereço",
+                  "isRequired": true,
+                  "conditions": {
+                    "type": "form",
+                    "elements": [
+                      {
+                        "key": "addressCountryId",
+                        "comparisonOperator": "notEqual",
+                        "value": null
+                      }
+                    ]
                   }
-                ]
-              }
-            },
-            {
-              "elementType": "input",
-              "dataType": "text",
-              "label": "Estado",
-              "name": "state",
-              "placeholder": "Estado do seu endereço",
-              "isRequired": true,
-              "conditions": {
-                "type": "form",
-                "elements": [
-                  {
-                    "key": "addressCountryId",
-                    "comparisonOperator": "notEqual",
-                    "value": null
+                },
+                {
+                  "elementType": "input",
+                  "dataType": "text",
+                  "label": "Cidade",
+                  "name": "city",
+                  "placeholder": "Município do seu endereço",
+                  "isRequired": true,
+                  "conditions": {
+                    "type": "form",
+                    "elements": [
+                      {
+                        "key": "addressCountryId",
+                        "comparisonOperator": "notEqual",
+                        "value": null
+                      }
+                    ]
                   }
-                ]
-              }
-            },
-            {
-              "elementType": "input",
-              "dataType": "text",
-              "label": "Cidade",
-              "name": "city",
-              "placeholder": "Município do seu endereço",
-              "isRequired": true,
-              "conditions": {
-                "type": "form",
-                "elements": [
-                  {
-                    "key": "addressCountryId",
-                    "comparisonOperator": "notEqual",
-                    "value": null
-                  }
-                ]
-              }
+                }
+              ]
             }
           ]
         }
