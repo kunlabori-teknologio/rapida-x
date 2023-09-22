@@ -1,20 +1,11 @@
-const path = require("path");
 const chp = require("child_process");
-require("dotenv").config();
-
-const terminalPassword = process.env.TERMINAL_PASSWORD;
-const projectsPath = path.join(__dirname, "..", "..", "..", "..", "project");
-const appsPath = path.join(__dirname, "..", "..", "..", "..", "apps");
-
-const isLinux = process.platform === "linux";
-
-const installerCommand = isLinux
-  ? `echo ${terminalPassword} |  sudo -S apt-get`
-  : "brew";
-
-const installerAppCommand = isLinux ? `snap` : "brew";
-
-const needsSudoString = isLinux ? "echo ${terminalPassword} | sudo -S " : "";
+const {
+  appsPath,
+  projectsPath,
+  installerCommand,
+  isLinux,
+  needsSudoString,
+} = require("./01-make-skeleton-object");
 
 const makeFlutterSkeleton = async (array) => {
   const project = array[0].project;
@@ -27,25 +18,14 @@ const makeFlutterSkeleton = async (array) => {
     return true;
   } catch (err) {
     try {
-      if (!isLinux)
-        chp.execSync(
-          `${needsSudoString}/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`
-        );
-
-      if (isLinux) {
-        console.info(`Install snap`);
-        chp.execSync(
-          `${installerCommand} install snapd ${isLinux ? "--yes" : ""}`
-        );
-      }
+      console.info(`Install snap`);
+      chp.execSync(
+        `${installerCommand} install snap${isLinux ? "d --yes" : ""}`
+      );
 
       console.info(`Install flutter`);
-      // chp.execSync(`${needsSudoString}${installerAppCommand} remove flutter`);
-      chp.execSync(
-        `${needsSudoString}${installerAppCommand} install flutter ${
-          isLinux ? "--classic" : ""
-        }`
-      );
+      // chp.execSync(`${needsSudoString}snap uninstall flutter`);
+      chp.execSync(`${needsSudoString}snap install flutter --classic`);
       chp.execSync(`flutter --version`);
       const sdkPath = chp
         .execSync(
@@ -75,8 +55,4 @@ const makeFlutterSkeleton = async (array) => {
       return error.message;
     }
   }
-};
-
-module.exports = {
-  makeFlutterSkeleton,
 };
