@@ -44,7 +44,7 @@ const flutter = async (array) => {
   console.log(array);
   await makeFlutterSkeleton(array);
   const code = await makeFlutterCode(array);
-  // makeFlutterFiles(code);
+  makeFlutterFiles(code);
   matchFlutterFilesAndCodes(code);
   return false;
 };
