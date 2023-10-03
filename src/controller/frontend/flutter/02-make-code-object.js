@@ -1,8 +1,9 @@
+const { string }  = require("kunla-utils");
 // const {
 //   createFlutterControllerFormCodeOverProjectUi,
 // } = require("./form/<ui>/controller");
 const {
-  createFlutterTemplateFormCodeOverProjectUi,
+  createFlutterTemplateFormCodeOverMaterialUi, createFlutterFormElementsDeclarationCode,
 } = require("./form/material/template");
 // const {
 //   createFlutterControllerTableCodeOverProjectUi,
@@ -41,7 +42,7 @@ const makeFlutterCode = async (arrayOfProjectObjects) => {
     //   }
     // }
   }
-
+  
   return { project: arrayOfProjectObjects[0].project, components, modules };
 };
 
@@ -51,10 +52,42 @@ const createTemplateCodeOverObject = async (array, object) => {
   switch (object.type) {
     case "form":
       if (project.ui === "material")
-        code += await createFlutterTemplateFormCodeOverProjectUi(
+        formElementDeclarationCode = formElementsDeclarationCode = createFlutterFormElementsDeclarationCode(project, object);      
+        // formElementsinitializationCode = await createFlutterFormElementsInitializationCode(project, object);
+        // formElementsDisposeCode = await createFlutterFormElementsDeclarationCode(project, object);
+        formCode = await createFlutterTemplateFormCodeOverMaterialUi(
           project,
           object
         );
+        
+        code = `
+        class _${string.pascalfy(object.id)}State extends State<${string.pascalfy(object.id)}> {
+          final _${object.id}Key = GlobalKey<FormState>();
+          ${formElementDeclarationCode}
+        
+          @override
+          void dispose() {
+            firstInputController.dispose();
+            super.dispose();
+          }
+        
+          void initState() {
+            super.initState();
+            firstInputController = TextEditingController();
+          }
+        
+          Widget build(BuildContext context) {
+            return Form(
+              key: _${object.id}Key,
+              child: Column(
+                children: [
+                  ${formCode}
+                ],
+              )
+            );
+          }
+        }
+        `
       break;
 
     // case "table":
@@ -68,7 +101,8 @@ const createTemplateCodeOverObject = async (array, object) => {
       console.error(`${object.type} is not an expected type to origin object.`);
       break;
   }
-
+  console.log(code, 100);
+  return false;
   return code;
 };
 

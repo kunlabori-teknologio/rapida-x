@@ -41,7 +41,6 @@ const angular = async (array) => {
 };
 
 const flutter = async (array) => {
-  console.log(array);
   await makeFlutterSkeleton(array);
   const code = await makeFlutterCode(array);
   makeFlutterFiles(code);

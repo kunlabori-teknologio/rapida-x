@@ -66,9 +66,9 @@ const makeFlutterSkeleton = async (array) => {
       console.info(`Create components folder`);
       chp.execSync(`mkdir ${appsPath}/${project.folder}/lib/components`);
       console.info(`${appsPath}/${project.folder}/src/app/components created`);
-      console.info(`Create modules folder`);
-      chp.execSync(`mkdir ${appsPath}/${project.folder}/lib/modules`);
-      console.info(`${appsPath}/${project.folder}/src/app/modules created`);
+      console.info(`Create screens folder`);
+      chp.execSync(`mkdir ${appsPath}/${project.folder}/lib/screens`);
+      console.info(`${appsPath}/${project.folder}/src/app/screens created`);
       return true;
     } catch (error) {
       console.warn(error.message);
