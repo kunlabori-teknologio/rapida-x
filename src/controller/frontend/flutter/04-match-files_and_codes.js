@@ -4,7 +4,6 @@ const fs = require("fs");
 const { kebabfy } = require("kunla-utils/src/controller/utils/string");
 
 const matchFlutterFilesAndCodes = (code) => {
-  console.log({ code });
   const appPath = path.join(
     __dirname,
     "..",

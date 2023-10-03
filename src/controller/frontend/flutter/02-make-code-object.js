@@ -3,7 +3,7 @@ const { string }  = require("kunla-utils");
 //   createFlutterControllerFormCodeOverProjectUi,
 // } = require("./form/<ui>/controller");
 const {
-  createFlutterTemplateFormCodeOverMaterialUi, createFlutterFormElementsDeclarationCode,
+  createFlutterTemplateFormCodeOverMaterialUi, createFlutterFormElementsPresetCode,
 } = require("./form/material/template");
 // const {
 //   createFlutterControllerTableCodeOverProjectUi,
@@ -52,9 +52,8 @@ const createTemplateCodeOverObject = async (array, object) => {
   switch (object.type) {
     case "form":
       if (project.ui === "material")
-        formElementDeclarationCode = formElementsDeclarationCode = createFlutterFormElementsDeclarationCode(project, object);      
-        // formElementsinitializationCode = await createFlutterFormElementsInitializationCode(project, object);
-        // formElementsDisposeCode = await createFlutterFormElementsDeclarationCode(project, object);
+        formElementPresetCode = createFlutterFormElementsPresetCode(project, object);
+        // formElementsDisposeCode = await createFlutterFormElementsPresetCode(project, object);
         formCode = await createFlutterTemplateFormCodeOverMaterialUi(
           project,
           object
@@ -63,17 +62,17 @@ const createTemplateCodeOverObject = async (array, object) => {
         code = `
         class _${string.pascalfy(object.id)}State extends State<${string.pascalfy(object.id)}> {
           final _${object.id}Key = GlobalKey<FormState>();
-          ${formElementDeclarationCode}
+          ${formElementPresetCode.formElementDeclarationCode}
         
           @override
           void dispose() {
-            firstInputController.dispose();
+            ${formElementPresetCode.formElementsDisposeCode}
             super.dispose();
           }
         
           void initState() {
             super.initState();
-            firstInputController = TextEditingController();
+            ${formElementPresetCode.formElementsinitializationCode}
           }
         
           Widget build(BuildContext context) {

@@ -6,9 +6,11 @@ const { createSelectCode } = require("./select");
 const { createWysiwygCode } = require("./wysiwyg");
 
 let formElementDeclarationCode = '';
+let formElementsinitializationCode = '';
+let formElementsDisposeCode = '';
 let templateCode = '';
 
-const createFlutterTemplateFormCodeOverMaterialUi = async (project, object) => {
+const createFlutterTemplateFormCodeOverMaterialUi = async (project, object, isTabOrArray = false) => {
   for (let i = 0; i < object.elements.length; i++) {
     const element = object.elements[i];
     switch (element.elementType) {
@@ -21,9 +23,7 @@ const createFlutterTemplateFormCodeOverMaterialUi = async (project, object) => {
       //   break;
       
       case "input":
-        console.log(22);
         templateCode += await createInputCode(project, object, element);
-        console.log(templateCode, 23);
         break;
       
       // case "radio":
@@ -50,30 +50,31 @@ const createFlutterTemplateFormCodeOverMaterialUi = async (project, object) => {
         console.error(`There is no such kind of element: ${element.elementType}`)
         break;
     }
-
-    return templateCode;
   } 
+  return templateCode;
 };
 
-const createFlutterFormElementsDeclarationCode = (project, object) => {
+const createFlutterFormElementsPresetCode = (project, object, isTabOrArray = false) => {
+  if (!isTabOrArray) {
+    formElementDeclarationCode = '';
+    formElementsinitializationCode = '';
+    formElementsDisposeCode = '';
+  }
   for (let i = 0; i < object.elements.length; i++) {
     const element = object.elements[i];
     switch (element.elementType) {
       // case "autocomplete":
       //   formElementDeclarationCode += await createAutocompleteCode(project, object, element);
       //   break;
-  
-      // case "checkbox":
-      //   formElementDeclarationCode += await createCheckboxCode(project, object, element);
-      //   break;
       
       case "input":
-        formElementDeclarationCode += `late final TextEditingController ${element.name}Controller;`;
+        formElementDeclarationCode += `
+          late final TextEditingController ${element.name}Controller;`;
+        formElementsinitializationCode += `
+            ${element.name}Controller = TextEditingController();`;
+        formElementsDisposeCode += `
+            ${element.name}Controller.dispose();`;
         break;
-      
-      // case "radio":
-      //   formElementDeclarationCode += await createRadioCode(project, object, element);
-      //   break;
   
       // case "select":
       //   formElementDeclarationCode += await createSelectCode(project, object, element);
@@ -82,10 +83,13 @@ const createFlutterFormElementsDeclarationCode = (project, object) => {
       case "tab":
         for (let j = 0; j < element.tabs.length; j++) {
           const tab = element.tabs[j];
-          formElementDeclarationCode += createFlutterFormElementsDeclarationCode(project, tab);
+          createFlutterFormElementsPresetCode(project, tab, true);
         }
         break;
-  
+
+      case "array":
+        createFlutterFormElementsPresetCode(project, element, true);
+        break;
       // case "wysiwyg":
       //   formElementDeclarationCode += await createWysiwygCode(project, object, element);
       //   break;
@@ -94,12 +98,11 @@ const createFlutterFormElementsDeclarationCode = (project, object) => {
         console.error(`There is no such kind of element: ${element.elementType}`)
         break;
     }
-
-    return formElementDeclarationCode;
   }
+  return {formElementDeclarationCode, formElementsinitializationCode, formElementsDisposeCode};
 };
 
 module.exports = {
   createFlutterTemplateFormCodeOverMaterialUi,
-  createFlutterFormElementsDeclarationCode
+  createFlutterFormElementsPresetCode,
 }
