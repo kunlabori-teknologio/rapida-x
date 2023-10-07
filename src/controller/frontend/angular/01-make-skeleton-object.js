@@ -8,7 +8,7 @@ const appsPath = path.join(__dirname, '..', '..', '..', '..', 'apps');
 
 const makeAngularSkeleton = async (array) => {
   const project = array[0].project;
-  
+
   console.info(`Check project folder existence`);
   try {
     chp.execSync(`[ -d "${appsPath}/${project.folder}" ]`);
@@ -17,16 +17,18 @@ const makeAngularSkeleton = async (array) => {
     return true;
   } catch (err) {
     try {
-      // console.info(`Install node lts`);
-      // chp.execSync('/bin/bash -c "source ~/.nvm/nvm.sh && nvm install --lts"');
-      // console.info(`Node installed successfully`);
+      console.info(`Install node lts`);
+      chp.execSync('/bin/bash -c "source ~/.nvm/nvm.sh && nvm install --lts"');
+      console.info(`Node installed successfully`);
 
-      // console.info(`Install angular lts`);
-      // chp.execSync('npm uninstall -g @angular/cli && npm cache clean --force && npm cache verify && npm install -g @angular/cli');
-      // console.info(`Angular installed successfully`);
+      console.info(`Install angular lts`);
+      chp.execSync('npm uninstall -g @angular/cli && npm cache clean --force && npm cache verify && npm install -g @angular/cli');
+      console.info(`Angular installed successfully`);
       
       console.info(`Create new angular app "${project.folder}"`);
-      chp.execSync(`ng new ${project.folder} --directory apps/${project.folder} --routing --style=scss`);
+      chp.execSync(
+        `ng new ${project.folder} --directory apps/${project.folder} --routing --style=scss`
+      );
       console.info(`${projectsPath}/${project.folder} created`);
       
       console.info(`Create components folder`);
@@ -57,8 +59,8 @@ const makeAngularSkeleton = async (array) => {
       return error.message;
     }
   }
-}
+};
 
 module.exports = {
-  makeAngularSkeleton
-}
+  makeAngularSkeleton,
+};
