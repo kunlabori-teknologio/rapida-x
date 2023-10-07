@@ -1,6 +1,6 @@
 const attributes = require("./utils/form-attribute");
 
-const createInputCode = async (project,object, element) => {
+const createInputCode = async (project, object, element) => {
   const attribute = attributes.setAttribute(element);
   
   let code = "";

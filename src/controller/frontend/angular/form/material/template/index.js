@@ -5,7 +5,9 @@ const { createRadioCode } = require("./radio");
 const { createSelectCode } = require("./select");
 const { createWysiwygCode } = require("./wysiwyg");
 
-const createAngularTemplateFormCodeOverMaterialUi = async (project, object) => {
+let parentArray = [];
+
+const createAngularTemplateFormCodeOverMaterialUi = async (project, object, parentArrayId = null) => {
   let templateCode = '';
   for (let i = 0; i < object.elements.length; i++) {
     const element = object.elements[i];
@@ -19,7 +21,7 @@ const createAngularTemplateFormCodeOverMaterialUi = async (project, object) => {
         break;
       
       case "input":
-        templateCode += await createInputCode(project, object, element);
+        templateCode += await createInputCode(project, object, element, parentArrayId);
         break;
       
       case "radio":
@@ -33,9 +35,15 @@ const createAngularTemplateFormCodeOverMaterialUi = async (project, object) => {
       case "tab":
         for (let j = 0; j < element.tabs.length; j++) {
           const tab = element.tabs[j];
+          parentArray = [];
           
           templateCode += await createAngularTemplateFormCodeOverMaterialUi(project, tab);
         }
+        break;
+
+      case "array":
+        parentArray.push(element.id);
+        templateCode += await createAngularTemplateFormCodeOverMaterialUi(project, element, element.id);
         break;
   
       case "wysiwyg":
@@ -50,6 +58,13 @@ const createAngularTemplateFormCodeOverMaterialUi = async (project, object) => {
     return templateCode;
   } 
 };
+
+const dealWithArray = async (arrayElement, elements) => {
+  let code = "";
+  code += await codeElements(arrayElement.elements, arrayElement.id);
+
+  return code;
+}
 
 module.exports = {
   createAngularTemplateFormCodeOverMaterialUi

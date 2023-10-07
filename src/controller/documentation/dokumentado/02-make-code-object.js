@@ -62,7 +62,7 @@ const codeElements = async (elements, parentArrayId = null) => {
       }
     } else if (element.elementType === "array") {
       parentArray.push(element.id);
-      code += await dealWithArray(element, elements);      
+      code += await dealWithArray(element, elements);
     } else {
       if (parentArrayId) {
         code += `<h6>${element.label}: ${element.elementType}${element.isRequired ? "*" : ""} (${parentArray.map(name => name)})</h6>`;
