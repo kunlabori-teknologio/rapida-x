@@ -329,7 +329,7 @@
                   "elementType": "input",
                   "dataType": "text",
                   "label": "Comentário",
-                  "name": "contactComment",
+                  "name": "professionDetailComment",
                   "placeholder": "Ex.: CRM/SP | CRF/MG | CREA/AP",
                   "tooltip": "Informação adicional acerca do detalhe"
                 }
